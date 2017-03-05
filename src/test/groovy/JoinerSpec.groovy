@@ -57,6 +57,28 @@ class JoinerSpec extends Specification {
         j([['a', 1], ['b', 2], ['a', 3], ['c', 4], ['a', 5], ['d', 8]]) | j([['a', 'a'], ['d', 'd']])            || [[1, 'a'], [2], [3, 'a'], [4], [5, 'a'], [8, 'd']]
     }
 
+    @Unroll
+    def 'diffing #j1 and #j2 returns #r'() {
+        given: 'joinables #j1 and #j2'
+        j.firstJoinable = j1
+        j.secondJoinable = j2
+
+        when:
+        j.diff()
+
+        then:
+        j.result == r
+
+        where:
+        j1                                                                                      | j2                                                                                      || r
+        []                                                                                      | []                                                                                      || []
+        j([['a', 1]])                                                                           | []                                                                                      || [[1]]
+        []                                                                                      | j([['a', 1]])                                                                           || []
+        j([['1', 'a'], ['2', 'b'], ['3', 'c'], ['4', 'd'], ['2', 'e'], ['1', 'f'], ['5', 'g']]) | j([['2', 'I'], ['10', 'II'], ['11', 'III'], ['5', 'IV']])                               || [['a'], ['c'], ['d'], ['f']]
+        j([['2', 'I'], ['10', 'II'], ['11', 'III'], ['5', 'IV']])                               | j([['1', 'a'], ['2', 'b'], ['3', 'c'], ['4', 'd'], ['2', 'e'], ['1', 'f'], ['5', 'g']]) || [['II'], ['III']]
+
+    }
+
     def j(list) {
         list.collect { new Line(it[0], it[1]) }
     }

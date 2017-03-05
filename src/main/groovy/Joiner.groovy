@@ -35,4 +35,13 @@ class Joiner {
         }
     }
 
+    def diff() {
+        result = []
+        def secondJoinableKeys = secondJoinable*.key
+        firstJoinable.each { k1 ->
+            if (!secondJoinableKeys.contains(k1.key))
+                result << [k1.record]
+        }
+    }
+
 }
