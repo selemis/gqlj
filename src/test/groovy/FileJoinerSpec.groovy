@@ -1,5 +1,8 @@
 import spock.lang.Specification
 
+/**
+ * FileJoiner Specification.
+ */
 class FileJoinerSpec extends Specification {
 
     def 'joining 2 csv streams'() {

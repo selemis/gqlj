@@ -1,16 +1,36 @@
+/**
+ * Performs the three join operations.
+ */
 class Joiner {
 
+    /**
+     * The first list of Line objects that take part in the join operation.
+     */
     List<Line> firstJoinable
+
+    /**
+     * The second list of Line objects that take part in the join operation.
+     */
     List<Line> secondJoinable
+
+    /**
+     * The result after the join operation.
+     */
     def result
 
+    /**
+     * Create a new Joiner instance.
+     */
     Joiner() {
         firstJoinable = []
         secondJoinable = []
         result = []
     }
 
-    def join() {
+    /**
+     * Perform an inner join operation.
+     */
+    void join() {
         result = []
         firstJoinable.each { k1 ->
             def matchingEntry = secondJoinable.find { k2 ->
@@ -21,7 +41,10 @@ class Joiner {
         }
     }
 
-    def leftJoin() {
+    /**
+     * Perform a left join operation.
+     */
+    void leftJoin() {
         result = []
         firstJoinable.each { k1 ->
             def matchingEntry = secondJoinable.find { k2 ->
@@ -35,7 +58,10 @@ class Joiner {
         }
     }
 
-    def diff() {
+    /**
+     * Perform a diff operation.
+     */
+    void diff() {
         result = []
         def secondJoinableKeys = secondJoinable*.key
         firstJoinable.each { k1 ->

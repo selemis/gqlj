@@ -1,6 +1,9 @@
 import spock.lang.Specification
 import spock.lang.Unroll
 
+/**
+ * Joiner Specification.
+ */
 class JoinerSpec extends Specification {
 
     Joiner j = new Joiner()
@@ -21,7 +24,7 @@ class JoinerSpec extends Specification {
         then: 'the result is #r'
         j.result == r
 
-        where: "j1 #j1 and j2 #j3 and result #r"
+        where: "j1 #j1 and j2 #j2 and result #r"
         j1                                                                | j2                                                  || r
         []                                                                | []                                                  || []
         j([['a', 1]])                                                     | []                                                  || []
@@ -44,7 +47,7 @@ class JoinerSpec extends Specification {
         then: 'the result is #r'
         j.result == r
 
-        where: "j1 #j1 and j2 #j3 and result #r"
+        where: "j1 #j1 and j2 #j2 and result #r"
         j1                                                              | j2                                     || r
         []                                                              | []                                     || []
         j([['a', 1]])                                                   | []                                     || [[1]]
@@ -63,13 +66,13 @@ class JoinerSpec extends Specification {
         j.firstJoinable = j1
         j.secondJoinable = j2
 
-        when:
+        when: 'diffing'
         j.diff()
 
-        then:
+        then: 'the result is #r'
         j.result == r
 
-        where:
+        where: "j1 #j1 and j2 #j2 and result #r"
         j1                                                                                      | j2                                                                                      || r
         []                                                                                      | []                                                                                      || []
         j([['a', 1]])                                                                           | []                                                                                      || [[1]]

@@ -1,48 +1,85 @@
+/**
+ * This class responsibility is to join 2 csv files.
+ */
 class FileJoiner {
 
     InputStream stream1
     InputStream stream2
     def result
 
-    void writeOutput(String filepath) {
-        def file = new File(filepath)
+    /**
+     * Write the result to a file.
+     *
+     * @param filePath path to the output file
+     */
+    void writeOutput(String filePath) {
+        def file = new File(filePath)
         output().each {
             file << it
             file << "\n"
         }
     }
 
+    /**
+     * The output of the operation that will be written to a file.
+     *
+     * @return join operation formatted output
+     */
     def output() {
         result.collect {
             it.last().join(';')
         }
     }
 
-    def join(String filePath1, String filePath2) {
+    /**
+     * Join 2 files based on file paths.
+     *
+     * @param filePath1 first file file path
+     * @param filePath2 second file file path
+     */
+    void join(String filePath1, String filePath2) {
         join(new File(filePath1), new File(filePath2))
     }
 
-    def leftJoin(String filePath1, String filePath2) {
+    /**
+     * Left join 2 files based on file paths.
+     *
+     * @param filePath1 first file file path
+     * @param filePath2 second file file path
+     */
+    void leftJoin(String filePath1, String filePath2) {
         leftJoin(new File(filePath1), new File(filePath2))
     }
 
-    def join(File file1, File file2) {
+    /**
+     * Join 2 file objects.
+     *
+     * @param file1 first file
+     * @param file2 second file
+     */
+    void join(File file1, File file2) {
         joinFiles(file1, file2) { join() }
     }
 
-    def leftJoin(File file1, File file2) {
+    /**
+     * Left join 2 file objects.
+     *
+     * @param file1 first file
+     * @param file2 second file
+     */
+    void leftJoin(File file1, File file2) {
         joinFiles(file1, file2) { leftJoin() }
     }
 
-    def join() {
+    void join() {
         joinStreams { it.join() }
     }
 
-    def leftJoin() {
+    void leftJoin() {
         joinStreams { it.leftJoin() }
     }
 
-    def joinFiles(File file1, File file2, def clj) {
+    void joinFiles(File file1, File file2, def clj) {
         result = []
         file1.withInputStream { stream1 ->
             this.stream1 = stream1
@@ -53,7 +90,7 @@ class FileJoiner {
         }
     }
 
-    def joinStreams(def clj) {
+    void joinStreams(def clj) {
         result = []
         Joiner j = new Joiner()
         List<Line> j1 = []
