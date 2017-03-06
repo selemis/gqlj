@@ -29,7 +29,7 @@ The result will have the lines of the first file joined by the lines of
 the second only in case that second file's first column matches the 
 first file's first column.
 
-```diff```
+```diff operation```
 
 It will return the lines that their first column do not match. The lines
 of the first file are returned first followed by the lines of the second
